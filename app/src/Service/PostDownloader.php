@@ -32,4 +32,3 @@ class PostDownloader
         $this->entityManager->flush();
     }
 }
-//php bin/console app:add-posts

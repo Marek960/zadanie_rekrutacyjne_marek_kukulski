@@ -9,18 +9,18 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Post;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Service\PostService;
 
 class DashboardController extends AbstractController
 {
     public function __construct(
-        public ManagerRegistry $doctrine, 
-        public EntityManagerInterface $entityManager
+        public PostService $postService
     ) {}
 
     #[Route('/lista', name: 'lista')]
     public function index(): Response
     {
-        $posts = $this->doctrine->getRepository(Post::class)->findAll();
+        $posts = $this->postService->listPosts() ?? null;
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         return $this->render('dashboard/index.html.twig', [
@@ -32,11 +32,7 @@ class DashboardController extends AbstractController
     #[Route('/{id}', name: 'post_delete', methods: 'POST', requirements:["id"=>"\d+"])]
     public function delete(Request $request, Post $post): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
-            $this->entityManager->remove($post);
-            $this->entityManager->flush();
-        }
- 
+        $this->postService->removePost($post, $request->request->get('_token')); 
         return $this->redirectToRoute('lista', [], Response::HTTP_SEE_OTHER);
     }
 }

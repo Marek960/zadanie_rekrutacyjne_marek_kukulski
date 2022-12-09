@@ -29,7 +29,7 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'post_delete', methods: 'POST')]
+    #[Route('/{id}', name: 'post_delete', methods: 'POST', requirements:["id"=>"\d+"])]
     public function delete(Request $request, Post $post): Response
     {
         if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {

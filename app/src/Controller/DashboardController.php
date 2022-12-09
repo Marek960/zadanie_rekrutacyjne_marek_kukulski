@@ -12,11 +12,10 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class DashboardController extends AbstractController
 {
-    public function __construct(ManagerRegistry $doctrine, EntityManagerInterface $entityManager)
-    {
-        $this->doctrine = $doctrine;
-        $this->entityManager = $entityManager;
-    }
+    public function __construct(
+        public ManagerRegistry $doctrine, 
+        public EntityManagerInterface $entityManager
+    ) {}
 
     #[Route('/lista', name: 'lista')]
     public function index(): Response
@@ -29,9 +28,6 @@ class DashboardController extends AbstractController
             'posts' => $posts
         ]);
     }
-
-    
-
 
     #[Route('/{id}', name: 'post_delete', methods: 'POST')]
     public function delete(Request $request, Post $post): Response

@@ -15,11 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class AddPostsCommand extends Command
 {
-    private $postDownloader; 
-
-    public function __construct(PostDownloader $postDownloader)
-    {
-        $this->postDownloader = $postDownloader;
+    public function __construct(public PostDownloader $postDownloader) {
         parent::__construct();
     }
 
@@ -31,7 +27,6 @@ class AddPostsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $message = $this->postDownloader->generateData();
-
         $io = new SymfonyStyle($input, $output);
         $message = strtoupper('Records added to the database');
         $io->success($message);

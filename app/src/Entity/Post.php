@@ -7,7 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 
-/** A user. */
+/** A post. */
 #[ApiResource()]
 #[ORM\Entity(repositoryClass: QuoteRepository::class)]
 class Post

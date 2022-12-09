@@ -6,12 +6,9 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class PostDownloader
 {
-    private $entityManager; 
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
+    public function __construct(
+        public EntityManagerInterface $entityManager
+    ) {}
 
     public function generateData()
     {

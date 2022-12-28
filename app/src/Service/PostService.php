@@ -5,7 +5,7 @@ use App\Entity\Post;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
-class PostService
+class PostService 
 {
     public function __construct(
         public EntityManagerInterface $entityManager,
@@ -19,9 +19,7 @@ class PostService
 
     public function removePost(Post $post, string $token): void
     {
-        if ($this->isCsrfTokenValid('delete'.$post->getId(), $token)) {
-            $this->entityManager->remove($post);
-            $this->entityManager->flush();
-        }
+        $this->entityManager->remove($post);
+        $this->entityManager->flush();
     }
 }

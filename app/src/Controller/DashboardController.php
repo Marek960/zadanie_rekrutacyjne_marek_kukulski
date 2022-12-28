@@ -5,10 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Post;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Service\PostService;
 
 class DashboardController extends AbstractController
@@ -32,7 +30,10 @@ class DashboardController extends AbstractController
     #[Route('/{id}', name: 'post_delete', methods: 'POST', requirements:["id"=>"\d+"])]
     public function delete(Request $request, Post $post): Response
     {
-        $this->postService->removePost($post, $request->request->get('_token')); 
-        return $this->redirectToRoute('lista', [], Response::HTTP_SEE_OTHER);
+        $token = $request->request->get('_token');
+        if ($this->isCsrfTokenValid('delete-item', $token)) {
+            $this->postService->removePost($post, $token); 
+            return $this->redirectToRoute('lista', [], Response::HTTP_SEE_OTHER);
+        }
     }
 }

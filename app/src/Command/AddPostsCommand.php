@@ -19,17 +19,11 @@ class AddPostsCommand extends Command
         parent::__construct();
     }
 
-    protected function configure(): void
-    {
-      //
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $message = $this->postDownloader->generateData();
+        $this->postDownloader->generateData();
         $io = new SymfonyStyle($input, $output);
-        $message = strtoupper('Records added to the database');
-        $io->success($message);
+        $io->success(strtoupper('Records added to the database'));
 
         return Command::SUCCESS;
     }

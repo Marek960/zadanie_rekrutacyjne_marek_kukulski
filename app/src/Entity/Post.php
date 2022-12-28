@@ -2,14 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\QuoteRepository;
-use Doctrine\DBAL\Types\Types;
+use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 
 /** A post. */
 #[ApiResource()]
-#[ORM\Entity(repositoryClass: QuoteRepository::class)]
+#[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
 {
     #[ORM\Id]
